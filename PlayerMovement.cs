@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//You need an empty gameObject, with a body gameobject (Tagged "PlayerBody") as a child 
+//You need an empty gameObject (ADD THIS SCRIPT TO THIS OBJECT), with a body gameobject (Tagged "PlayerBody") as a child
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
