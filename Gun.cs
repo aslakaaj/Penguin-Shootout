@@ -4,9 +4,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Gun", menuName = "Weapons/Gun")]
 public class Gun : ScriptableObject
 {
+    public string weaponName;
     public int damage;
     public int range;
+    public float playerKnockback;
+    public float shotSpeed = 10;
 
-    //The graphics for your gun
     public GameObject gunPrefab;
 }
