@@ -5,9 +5,10 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public float health = 100;
-    public float moveSpeed = 5;
     private Rigidbody rb;
     NavMeshAgent agent;
+
+    Manager manager;
     
 
     public void applyDamage (float _damage)
@@ -15,8 +16,9 @@ public class Enemy : MonoBehaviour
         health -= _damage;
     }
 
-    private void Start()
+    private void Awake()
     {
+        manager = FindObjectOfType<Manager>();
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
     }
@@ -26,6 +28,14 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        for (int i = 0; i < manager.targets.Length; i++)
+        {
+            TargetTransform(manager.targets[i]);
         }
     }
 
