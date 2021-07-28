@@ -4,18 +4,36 @@ public class Manager : MonoBehaviour
 {
     public Transform[] targets;
 
-    private Enemy enemy;
+    public float maxPlayerHealth = 100;
+    public float currentPlayerHealth = 100;
+
+    public bool playerTakenDamage = false;
+
+    public GameObject[] activeEnemies;
 
     private void Start()
     {
-        enemy = FindObjectOfType<Enemy>();
+        currentPlayerHealth = maxPlayerHealth;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        for (int i = 0; i < targets.Length; i++)
+        //Counting enemies in the scene
+        activeEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        if (currentPlayerHealth <= 0)
         {
-            enemy.TargetTransform(targets[i]);
+            Debug.LogWarning("PLAYER DEAD");
+        }
+
+        if (currentPlayerHealth >= maxPlayerHealth)
+        {
+            playerTakenDamage = false;
+        }
+
+        else if (currentPlayerHealth != maxPlayerHealth)
+        {
+            playerTakenDamage = true;
         }
     }
 }
