@@ -6,7 +6,7 @@ public class Gun : ScriptableObject
 {
     public string weaponName;
     public int damage;
-    public int range;
+    public float range;
     public float playerKnockback;
     public float shotSpeed = 10;
 
