@@ -3,7 +3,10 @@ using System.Collections;
 
 public class WaveController : MonoBehaviour
 {
+    private Manager manager;
+
     public bool spawning = true;
+    public int waveNumber = 1;
 
     private WaveObject currentWave;
     public WaveObject[] wavesArray = new WaveObject[1];
@@ -14,13 +17,24 @@ public class WaveController : MonoBehaviour
 
     private void Awake()
     {
-        StartCoroutine(WaveStart());
+        manager = gameObject.GetComponent<Manager>();
+        StartCoroutine(WaveStart(waveNumber));
     }
 
-    IEnumerator WaveStart()
+    private void Update()
+    {
+        //If there are no more enemies, then next wave
+        if (manager.activeEnemies.Length <= 0)
+        {
+            waveNumber++;
+            NextWave();
+        }
+    }
+
+    IEnumerator WaveStart(int _waveIndex)
     {
         //Can be a future fault, if next wave doesn't start
-        currentWave = wavesArray[0];
+        currentWave = wavesArray[_waveIndex - 1];
 
         ApplyEnemiesToArray();
 
@@ -32,6 +46,11 @@ public class WaveController : MonoBehaviour
             Instantiate(enemies[j], SpawnPointPicker().position, SpawnPointPicker().rotation);
             Debug.Log("SPAWNED");
         }
+    }
+
+    private void NextWave()
+    {
+        StartCoroutine(WaveStart(waveNumber));
     }
 
     private void ApplyEnemiesToArray()
